@@ -291,8 +291,8 @@ h1,h2,p{margin:0}
 /* quick chips */
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
 .chips.scroll{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:1px;margin-right:-14px;padding-right:22px;
-  mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 26px),transparent 100%);
-  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 26px),transparent 100%)}
+  mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 44px),transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 44px),transparent 100%)}
 .chips.scroll::-webkit-scrollbar{display:none}
 .chip{
   padding:7px 11px;border-radius:99px;font-size:10.5px;font-weight:700;letter-spacing:.02em;
@@ -1176,12 +1176,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border:1px solid #fff
       state.kmManual = false;
       state.km = Math.max(0.5, Math.min(60, state.route.km));
       $("#km").value = state.km;
-      if(state.tollAuto){
-        if(cross && state.taxi === "urban"){ state.toll = cross.toll; }
-        else { state.toll = ""; }
-      } else if(cross && state.taxi !== "urban"){
-        state.toll = "";
-      }
+      /* a fresh route re-detects the tunnel; a manual pick only overrides that one trip */
+      state.tollAuto = true;
+      if(cross && state.taxi === "urban"){ state.toll = cross.toll; }
+      else { state.toll = ""; }
       update();
       if(!quiet){ sfxDing(); }
       if(navigator.vibrate){ try{ navigator.vibrate(8); }catch(e){} }
